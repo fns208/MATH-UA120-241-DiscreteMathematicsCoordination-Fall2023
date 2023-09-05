@@ -1,5 +1,6 @@
 \documentclass{article}
 \usepackage{graphicx} % Required for inserting images
+\usepackage{booktabs}
 
 \title{MATH-UA120-241-DiscreteMathematicsCoordination-Fall2023}
 
@@ -12,5 +13,54 @@
 Please feel free to add any interesting exercises you come across that we can add to either the Polished Proofs or Problem Sets.
 
 \section{Suggested Problems}
+
+\subsection{Section 7}
+
+\subsubsection{truth table}
+
+Consider the following truth table
+\begin{table}[h]
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+x & y & (a) \hspace{8mm} & (b) \hspace{8mm}  & (c) \hspace{8mm}  & (d) \hspace{8mm} \\ \midrule
+T & T & F   & F   & T   & T   \\
+T & F & T   & T   & T   & F   \\
+F & T & T   & T   & T   & T   \\
+F & F & F   & T   & T   & F   \\ \bottomrule
+\end{tabular}
+\end{table}
+
+Complete the truth table by determining Boolean expressions (a), (b), (c), and (d) that have the values shown in the table.\\
+
+\textbf{Answer:}
+\begin{table}[h]
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+x & y & (a) $\neg (x \leftrightarrow y)$  & (b) $\neg (x \wedge y)$  & (c) T$\vee x$  & (d) $y \wedge$T \\ \midrule
+T & T & F   & F   & T   & T   \\
+T & F & T   & T   & T   & F   \\
+F & T & T   & T   & T   & T   \\
+F & F & F   & T   & T   & F   \\ \bottomrule
+\end{tabular}
+\end{table}
+
+
+
+\subsection{Section 8}
+
+\subsubsection{drink combinations}
+
+Suppose a drink comes in three sizes (small, medium, and large), three flavors (vanilla, strawberry, and chocolate), and two temperatures (hot and cold). How many unique drinks can be made? Create a table or another visualization showing all possible combinations.\\
+
+\textbf{Answer:} $3 \times 3 \times 2 = 18$
+\begin{table}[h]
+\begin{tabular}{@{}cccc@{}}
+\toprule
+ & Small & Med & Large  \\ \midrule
+Vanilla & hot/cold & hot/cold & hot/cold   \\
+Strawberry & hot/cold & hot/cold &  hot/cold \\
+Chocolate & hot/cold & hot/cold  & hot/cold \\ \bottomrule
+\end{tabular}
+\end{table}
 
 \end{document}
