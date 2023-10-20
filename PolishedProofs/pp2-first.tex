@@ -72,14 +72,18 @@ Please choose \textbf{one} of the following exercises. Begin with ``Claim:" and 
 
 \begin{enumerate}
 	\item 
-    Suppose you have a pile of $n\geq 2$ rocks and split the pile into $n$ piles of one rock each by successively splitting a pile of rocks into two smaller piles. Each time you split a pile, find the product of the number of rocks from the two new piles (e.g., if you form two smaller piles of $r$ and $s$ rocks, the product you form is $rs$.) Prove that by induction on $n$ that the sum of all of these products equals $\frac{n(n-1)}{2}$.
-	\item Let $A$ be the set of all numbers that can be produced by applying any of the rules below in any order for $n$ number of times, where $n\in \mathbb{N}$.
-    \begin{itemize}
-    \item Rule 1: $\frac{1}{2}\in A$
-    \item Rule 2: $1\in A$
-    \item Rule 3: If $a$ and $b$ have been produced by the rules, then $ab\in A$.
-    \item Rule 4: If $a$ and $b$ have been produced by the rules, then $\frac{a+b}{2}\in A$.
-    \end{itemize}
+    Suppose you have a pile of $n\geq 2$ rocks and split the pile into $n$ piles of one rock each by successively splitting a pile of rocks into two smaller piles. Each time you split a pile, find the product of the number of rocks from the two new piles (e.g., if you form two smaller piles of $r$ and $s$ rocks, the product you form is $rs$.) Prove that by induction on $n$ that no matter how the rocks are split, the sum of all of these products equals $\frac{n(n-1)}{2}$.
+
+	\item
+    Let $A_0 = \left\{\frac{1}{2},1\right\}$, and for each integer $n \in \mathbb{N}$, let 
+    \[
+        A_{n+1} = \left\{ab : a,b \in A_n\right\}
+                    \cup \left\{\frac{a+b}{2} : a,b\in A_n \right\}
+    \]
+    Finally, let 
+    \[
+        A = \bigcup_{n=1}^\infty A_n
+    \]
     Prove by induction on $n$ that if $a\in A$, then $0\leq a\leq 1$.
 
 \end{enumerate}
