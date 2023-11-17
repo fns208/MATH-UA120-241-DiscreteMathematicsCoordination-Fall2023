@@ -1,0 +1,337 @@
+\documentclass{article}
+% The LaTeX macro language is complicated, so we have inserted
+% lots of documenting comments into the file.  Comments start
+% with `%' and continue to the end of the line.  In Overleaf's
+% window, they are colored green
+%
+% Comments prefixed with `Student:' are relevant to students.
+% Skip anything else you don't understand, or ask me.
+%
+% set font encoding for PDFLaTeX or XeLaTeX
+\usepackage{ifxetex}
+\ifxetex
+  \usepackage{fontspec}
+\else
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{lmodern}
+\fi
+
+% Student: These lines describe some document metadata.
+\title{Problem Set 7}
+\author{%
+% Student: change the next line to your name!
+    Name
+\\  MATH-UA 120 Discrete Mathematics
+}
+\date{due December 1, 2023}
+
+
+\usepackage[headings=runin-fixed-nr]{exsheets}
+% These make enumerates within questions start at the second ("(a)") level, rather than the first ("1.") level.
+\makeatletter
+    \newcommand{\stepenumdepth}{\advance\@enumdepth\@ne}
+\makeatother
+\SetupExSheets{
+    question/pre-body-hook=\stepenumdepth,
+    solution/pre-body-hook=\stepenumdepth,
+}
+\DeclareInstance{exsheets-heading}{runin-nn-np}{default}{
+    runin = true,
+    title-post-code = .\space,
+    join = {
+        main[r,vc]title[l,vc](0pt,0pt);
+    }
+}
+\newif\ifshowsolutions
+% Student: replace `false' with `true' to typeset your solutions.
+% Otherwise they are ignored!
+\showsolutionstrue
+\ifshowsolutions
+    \SetupExSheets{
+        question/pre-hook=\itshape,
+        solution/headings=runin-nn-np,
+        solution/print=true,
+        solution/name=Answer
+    }%
+    \makeatletter%
+    \pretocmd{\@title}{Answers to }%
+    \makeatother%
+\else
+    \SetupExSheets{solution/print=false}
+\fi
+
+% Bug workaround: http://tex.stackexchange.com/a/146536/1402
+%\newenvironment{exercise}{}{}
+\RenewQuSolPair{question}{solution}
+%\let\answer\solution
+%\let\endanswer\endsolution
+\usepackage{manfnt}
+\newcommand{\danger}{\marginpar[\hfill\dbend]{\dbend\hfill}}
+
+% We are creating a command for some common commands.
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\id}{\operatorname{id}}
+
+% This package is for specifying graphics.  It's amazing.
+% Manual at http://texdoc.net/texmf-dist/doc/generic/pgf/pgfmanual.pdf
+\usepackage{tikz}
+
+\usepackage{amsmath, amsthm}
+\usepackage{amsfonts}
+\usepackage{siunitx}
+\DeclareSIUnit\pound{lb}
+\usepackage{hyperref}
+\newtheorem*{theorem}{Theorem}
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+% This is the beginning of the part of the file that describes
+% the text of the document.
+% That's why it says `\begin{document}' below. :-)
+\begin{document}
+\maketitle
+
+
+
+These are to be written up in \LaTeX{} and turned in to Gradescope.\\
+
+
+
+\ifshowsolutions
+    \SetupExSheets{solution/print=true}
+\else
+    \danger
+ \underline{ \LaTeX{}  Instructions:}  You can view the source (\texttt{.tex}) file to get some more examples of \LaTeX{} code.  I have commented the source file in places where new \LaTeX{} constructions are used.
+  
+  Remember to change \verb|\showsolutionsfalse| to \verb|\showsolutionstrue|
+    in the document's preamble 
+    (between \verb|\documentclass{article}| and \verb|\begin{document}|)
+\fi
+
+\section*{Assigned Problems}
+
+
+
+\begin{question}
+        A fair coin is flipped 10 times.
+    \begin{enumerate}
+        \item What is the probability that there are an equal number of head and
+            tails?
+        \item What is the probability the first three flips are heads?
+        \item What is the probability that there are an equal number of heads
+            and tails and the first three flips are heads?
+        \item What is the probability that there are an equal number of heads
+            and tails or the first three flips are heads (or both)?
+        \item What is the probability that the first three flips are heads given
+            that an equal number of heads and tails are flipped?
+    \end{enumerate}
+\end{question}
+% Student: put your answer between the next two lines.
+\begin{solution}
+    \begin{enumerate}
+        \item $\frac{\binom{10}{5}}{2^{10}} = \frac{252}{1024}$.  There are
+            $2^{10}$ outcomes when a fair coin is flipped 10 times.  The number
+            of heads and tails are equal only if 5 heads and 5 tails are
+            flipped.  There are $\binom{10}{5}$ ways to flip exactly 5 heads.
+        \item $\frac{2^7}{2^{10}} = \frac{1}{8}$, since the outcomes of the
+            remaining 7 flips is $2^7$.
+        \item $\frac{\binom{7}{2}}{2^{10}} = \frac{21}{1024}$, since exactly 2
+            heads must be flipped from the remaining 7 flips is denoted by
+        $\binom{7}{2}$.
+        \item Let $A$ be the event exactly 5 heads are tossed.  Let $B$ be the
+            event the first three flips are heads.  By inclusion-exclusion
+            principle, $P(A\cup B) = P(A) + P(B) - P(A\cap B)= \frac{1}{8} +
+            \frac{252}{1024} - \frac{21}{1024} = \frac{359}{1024}$.
+        \item By the definition of conditional probability,
+        \[
+            P(A \mid B) = \frac{P(A \cap B)}{P(B)} = \frac{\frac{21}{1024}}{\frac{252}{1024}} =
+                \frac{21}{252}.
+        \]
+    \end{enumerate}
+   
+   {\color{red} Rubric:
+\begin{itemize}
+\item 2P per part
+\end{itemize}}
+\end{solution}
+
+\begin{question}
+    An unfair coin shows heads with probability $p$ and tails with probability
+    $1-p$. Suppose this coin is flipped $2$ times. Let $A$ be the event that the coin comes up first heads and
+    then tails.  Let $B$ be the event that the coin comes up first tails and
+    then heads.
+    \begin{enumerate}
+        \item  Find $P(A)$.
+        \item  Find $P(B)$.
+        \item  Find $P(A \mid A \cup B)$.
+        \item  Find $P(B \mid A \cup B)$.
+    \end{enumerate}
+    Explain how one could use this unfair coin to make a fair decision.
+\end{question}
+% Student: put your answer between the next two lines.
+\begin{solution}
+    \begin{enumerate}
+        \item $p(1-p)$, since the second flip is independent from the first.
+        \item $(1-p)p$, since the second flip is independent from the first.
+        \item Observe that $A \cap B = \emptyset$.  By addition principle, $P(A
+        \cup B) = P(A )+ P(B) = 2p(1-p)$. By the definition of conditional
+        probability,
+            \[
+                P(A \mid A \cup B) = \frac{P(A \cap (A \cup B))}{P(A\cup B)}
+                = \frac{P(A)}{P(A\cup B)} = \frac{p(1-p)}{2p(1-p)} = \frac{1}{2}.
+            \]
+        \item Similarly,
+            \[
+                P(B  \mid  A \cup B) = \frac{P(B \cap (A \cup B))}{P(A\cup B)}
+                    = \frac{P(B)}{P(A\cup B)} = \frac{p(1-p)}{2p(1-p)} = \frac{1}{2}.
+            \]
+    \end{enumerate}
+    We can make a fair decision from an unfair coin as follows:
+    \begin{itemize}
+        \item Flip the coin twice.
+        \item If the results match, start over and flip again.
+        \item If the results differ, use the first result, forgetting the second.
+    \end{itemize}
+    Based on the computations above, we know that given that the results differ
+    (i.e. $A\cup B$), the probability of flipping heads (i.e. event $A$) or
+    tails (i.e. event $B$) at the first toss is the same, making it a ``fair"
+    toss.
+    
+{\color{red} Rubric:
+\begin{itemize}
+\item part a: 1P
+\item part b: 1P
+\item part c: 3P
+\item part d: 3P
+\item fair coin explanation: 2P
+\end{itemize}}
+\end{solution}
+
+\begin{question}
+    Suppose that $A$ and $B$ are events in a sample space $(S,P)$.
+    Prove or disprove:
+    \begin{enumerate}
+        \item If $P(A \cap B)=0$, then $P(A\mid B)=P(B\mid A)$ if and only
+            if $P(A)=P(B)$.
+        \item If $P(A)>0, P(B)>0$ but $P(A \cap B)=0$, then $P(A\mid
+            B)=P(B\mid A)$.  If proven, give an example of two such events
+            with $P(A) \ne P(B)$.
+    \end{enumerate}
+\end{question}
+% Student: put your answer between the next two lines.
+\begin{solution}
+ \textit{Counterexample for (a):}
+    Roll a fair six-sided die and record the numbed faced-up. Let $A$ be the
+    event of rolling $1$ or $2$ and let $B$ be the event of rolling $4$, $5$
+    or $6$.  Observe that $A \cap B = \emptyset$. By the definition of
+    conditional probability, $P(A \mid B) = P(B \mid A) = 0$. On the other
+    hand, $P(A) = \frac{1}{3}$ and $P(B) = \frac{1}{2}$. Since $P(A \mid B)
+    = P(B \mid A) = 0$, but $\frac{1}{3} = P(A) \ne P(B) = \frac{1}{2}$, the
+    statement is false.
+    
+\begin{proof}[Proof of (b)]
+    Suppose that $A$ and $B$ are arbitrary events in a sample space $(S,P)$.
+    Suppose that $P(A)>0, P(B)>0$ and $P(A \cap B)=0$.  By the definition of
+    conditional probability,
+    \[
+        P(A \mid B)P(B) = P(A \cap B) = 0.
+    \]
+    Since $P(B) >0$, it must necessarily hold $P(A\mid B) = 0$.  Similarly,
+    we have that
+    \[
+        P(B\mid A)P(A) = P(A \cap B) = 0
+    \]
+    and since $P(A) >0$, it must be that $P(B\mid A) = 0$. It follows that
+    $P(A \mid B) = 0 = P(B \mid A)$.
+\end{proof}
+{\color{red} Rubric:
+\begin{itemize}
+\item 5P per part
+\end{itemize}}
+\end{solution}
+
+\begin{question}
+    Consider the sample space $S = \{ a, b, c \}$, with equal probability for each outcome. Define the random variables $X$ and  
+    $Y$ by $X(a) = -1, \quad X(b) = 0, \quad X(c) = 1, \quad Y(a) = Y(c) = 0, \quad Y(b) = 1.$ 
+    Check that $\mathrm{Var}(X+Y) = \mathrm{Var}(X) + \mathrm{Var}(Y)$, but that $X$ and $Y$ are not independent.
+\end{question}
+% Student: put your answer between the next two lines.
+\begin{solution}
+	We first have
+	\[
+	E(X = -1) = E(X = 0) = E(X = 1) = 1/3, \quad E(Y = 0) = \frac23, \quad E(Y = 1) = 1/3.
+	\]
+	We deduce
+	\[
+	E(X) = \frac13 \left ( -1 + 0 + 1 \right ) = 0, \quad E(Y) = \frac23 \times 0 + \frac13 \times 1 = \frac13,
+	\]
+	and
+	\[
+	E(X^2) = \frac13 \left ( (-1)^2 + 0^2 + 1^2 \right ) = \frac23, \quad E(Y^2) = \frac23 \times 0^2 + \frac13 \times 1^2 = \frac13,
+	\]
+	so $\mathrm{Var}(X) = 2/3$ and $\mathrm{Var}(Y) = 2/9$. 
+	
+	On the other hand, we have $(X+Y)(a) = -1$, $(X+Y)(b) = 1$, and $(X+Y)(c) = 1$, so
+	\[
+	E(X+Y = -1) = \frac13, \quad E(X+Y = 1) = \frac23.
+	\]
+	We deduce
+	\[
+	E(X+Y) = \frac13 \times (-1) + \frac23 \times 1 = \frac13
+	\]
+	(or we could use linearity), and
+	\[
+	E((X+Y)^2) = \frac13 \times (-1)^2 + \frac23 \times 1^2 = 1,
+	\]
+	so $\mathrm{Var}(X+Y) = 8/9$, which is indeed $\mathrm{Var}(X) + \mathrm{Var}(Y)$.
+	
+	Finally, $X$ and $Y$ are not independent since
+	\[
+	E(X = 0, Y = 0)  = 0 
+	\]
+	which is not equal to
+	\[
+	E(X = 0) E(Y = 0) = \frac13 \times \frac23 = \frac 29.
+	\]
+	
+{\color{red} Rubric:
+\begin{itemize}
+\item Variance Computation: 8P
+\item Independence Explanation: 2P
+\end{itemize}}
+\end{solution}
+
+\begin{question}
+    Provide an alternative proof to Proposition 31.7 using any of the statements in Proposition 31.8.
+    \begin{theorem}[Proposition 31.7]
+    Let $A$ and $B$ be events in a sample space $(S, P)$. Then 
+    \[ P(A) + P(B) = P(A\cup B) + P(A\cap B).\]
+    \end{theorem}
+\end{question}
+% Student: put your answer between the next two lines.
+\begin{solution}
+Let $A$ and $B$ be events in a sample space $(S, P)$. Note 
+\begin{equation}
+P(A\cup B) = P(A\cup ( \bar{A} \cap B)) = P(A) + P(\bar{A} \cap B),
+\end{equation}
+since $A$ and $\bar{A}\cap B$ are pairwise disjoint. Since $B = ( A\cap B) \cup (\bar{A} \cap B)$ and $A\cap B$ and $ \bar{A} \cap B$ are pairwise disjoint, we have
+\begin{equation}
+P(B) = P((A\cap B) \cup (\bar{A} \cap B)) = P(A\cap B) +P(\bar{A} \cap B).
+\end{equation}
+
+Meaning, $P(\bar{A} \cap B) = P(B)-P(A\cap B)$. Substituting equation (2) into equation (1) gives us
+\[
+P(A\cup B) = P(A) + P(B)-P(A\cap B),
+\]
+
+which is equivalent to  $P(A) + P(B) = P(A\cup B) + P(A\cap B)$.
+
+{\color{red} Rubric:
+\begin{itemize}
+\item Follow RVF rubric with 1P for \LaTeX
+\end{itemize}}
+\end{solution}
+
+\end{document}
