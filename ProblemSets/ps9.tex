@@ -1,0 +1,177 @@
+\documentclass{article}
+% The LaTeX macro language is complicated, so we have inserted
+% lots of documenting comments into the file.  Comments start
+% with `%' and continue to the end of the line.  In Overleaf's
+% window, they are colored green
+%
+% Comments prefixed with `Student:' are relevant to students.
+% Skip anything else you don't understand, or ask me.
+%
+% set font encoding for PDFLaTeX or XeLaTeX
+\usepackage{ifxetex}
+\ifxetex
+  \usepackage{fontspec}
+\else
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{lmodern}
+\fi
+
+% Student: These lines describe some document metadata.
+\title{Problem Set 9}
+\author{%
+% Student: change the next line to your name!
+    Name
+\\  MATH-UA 120 Discrete Mathematics
+}
+\date{due December 15, 2023}
+
+
+\usepackage[headings=runin-fixed-nr]{exsheets}
+% These make enumerates within questions start at the second ("(a)") level, rather than the first ("1.") level.
+\makeatletter
+    \newcommand{\stepenumdepth}{\advance\@enumdepth\@ne}
+\makeatother
+\SetupExSheets{
+    question/pre-body-hook=\stepenumdepth,
+    solution/pre-body-hook=\stepenumdepth,
+}
+\DeclareInstance{exsheets-heading}{runin-nn-np}{default}{
+    runin = true,
+    title-post-code = .\space,
+    join = {
+        main[r,vc]title[l,vc](0pt,0pt);
+    }
+}
+\newif\ifshowsolutions
+% Student: replace `false' with `true' to typeset your solutions.
+% Otherwise they are ignored!
+\showsolutionsfalse
+\ifshowsolutions
+    \SetupExSheets{
+        question/pre-hook=\itshape,
+        solution/headings=runin-nn-np,
+        solution/print=true,
+        solution/name=Answer
+    }%
+    \makeatletter%
+    \pretocmd{\@title}{Answers to }%
+    \makeatother%
+\else
+    \SetupExSheets{solution/print=false}
+\fi
+
+% Bug workaround: http://tex.stackexchange.com/a/146536/1402
+%\newenvironment{exercise}{}{}
+\RenewQuSolPair{question}{solution}
+%\let\answer\solution
+%\let\endanswer\endsolution
+\usepackage{manfnt}
+\newcommand{\danger}{\marginpar[\hfill\dbend]{\dbend\hfill}}
+
+% We are creating a command for some common commands.
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\modulo}{\text{mod }}
+\newcommand{\divisor}{\text{ div }}
+
+% This package is for specifying graphics.  It's amazing.
+% Manual at http://texdoc.net/texmf-dist/doc/generic/pgf/pgfmanual.pdf
+\usepackage{tikz}
+\tikzstyle{vertex}=[circle,draw,fill=none,inner sep=0pt,outer sep=0pt, minimum width=1ex]
+\tikzstyle{edge}=[draw,thick]
+\usepackage{multirow, multicol}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{amsfonts}
+\usepackage{siunitx}
+\DeclareSIUnit\pound{lb}
+\usepackage{hyperref}
+\newtheorem*{theorem}{Theorem}
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+\newenvironment{note}{\noindent\emph{Note}.}{}
+% This is the beginning of the part of the file that describes
+% the text of the document.
+% That's why it says `\begin{document}' below. :-)
+\begin{document}
+\maketitle
+
+
+
+These are to be written up and turned in to Gradescope.\\
+
+
+
+\ifshowsolutions
+    \SetupExSheets{solution/print=true}
+\else
+    \danger
+ \underline{ \LaTeX  Instructions:}  You can view the source (\texttt{.tex}) file to get some more examples of \LaTeX{} code.  I have commented the source file in places where new \LaTeX{} constructions are used.
+  
+  Remember to change \verb|\showsolutionsfalse| to \verb|\showsolutionstrue|
+    in the document's preamble 
+    (between \verb|\documentclass{article}| and \verb|\begin{document}|)
+\fi
+
+\section*{Assigned Problems}
+
+\begin{question}
+    Suppose $G$ is a subgraph of $H$.  Prove or disprove:
+\begin{enumerate}
+	\item $\alpha(G) \leq \alpha(H)$
+	\item $\omega(G) \leq \omega(H)$
+	\end{enumerate}
+\end{question}
+% Student: put your answer between the next two lines.
+\begin{solution}
+\end{solution}
+
+
+\begin{question}
+    Let $G=(V, E)$ be a graph with $V=\{v_1, v_2, \dots, v_n\}$. Its \textbf{degree sequence} is the list of degrees of its vertices, arranged in non-increasing order. That is, the degree sequence of $G$ is $(d(v_1), d(v_2), \dots, d(v_n))$ with the vertices arranged such that $d(v_1)\geq  d(v_2) \geq \dots \geq d(v_n)$. Below are different lists of possible degree sequences. Determine whether each case can be a graph with $n$ vertices. If not, explain why not. If so, describe a graph with these degrees: is the graph a complete graph, a cycle, a path, contains specific subgraphs, connected, etc?
+\begin{enumerate}
+	\item $n=7$ and $(6, 5, 4, 3, 2, 1, 0)$
+	\item $n=6$ and $(2, 2, 2, 2, 2, 2)$
+	\item $n=6$ and $(3, 2, 2, 2, 2, 2)$
+	\item $n=6$ and $(1, 1, 1, 1, 1, 1)$
+	\item $n=6$ and $(5, 3, 3, 3, 3, 3)$
+	\end{enumerate}
+\end{question}
+% Student: put your answer between the next two lines.
+\begin{solution}
+\end{solution}
+
+
+\begin{question}
+    
+\begin{enumerate}
+	\item Given a graph with $n$ vertices. First, what is the maximum number of edges can the graph have and be disconnected? Then, what is the minimum number of edges we need to add to the previous graph to be connected?
+	\item A \textbf{complete bipartite graph} $K_{m,n}$ is a graph whose vertices can be partitioned $V=X\cup Y$ such that $|X|=m$ and  $|Y|=n$ for positive integers $m,n$, and $\{x, y\}$ is an edge in $K_{m,n}$ if and only if $x\in X$ and $y\in Y$. What is the number of edges in $K_{m,n}$?
+	\item Let integer $n\geq 3$. Given a cycle graph $C_n$, how many possible subgraphs of $C_n$ can there be?
+	\end{enumerate}
+\end{question}
+% Student: put your answer between the next two lines.
+\begin{solution}
+\end{solution}
+
+
+\begin{question}
+\begin{enumerate}
+	\item Prove that if a tree has $n$ vertices where $n\geq 4$ and is not a path graph $P_n$, then it has at least three vertices of degree 1.
+	\item A \textbf{complete bipartite graph} $K_{m,n}$ is a graph whose vertices can be partitioned $V=X\cup Y$ such that $|X|=m$ and  $|Y|=n$ for positive integers $m,n$, and $\{x, y\}$ is an edge in $K_{m,n}$ if and only if $x\in X$ and $y\in Y$. Prove that every cycle in $K_{m, n}$ has an even number of edges.
+	\end{enumerate}
+\end{question}
+% Student: put your answer between the next two lines.
+\begin{solution}
+\end{solution}
+
+
+\begin{question}
+    Prove by induction on $n$: Given integer $n\geq 1$. If  $T$ is a tree with $n$ vertices, then $T$ has $n-1$ edges. 
+\end{question}
+% Student: put your answer between the next two lines.
+\begin{solution}
+\end{solution}
+
+\end{document}
+

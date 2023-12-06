@@ -1,0 +1,228 @@
+\documentclass{article}
+% The LaTeX macro language is complicated, so we have inserted
+% lots of documenting comments into the file.  Comments start
+% with `%' and continue to the end of the line.  In Overleaf's
+% window, they are colored green
+%
+% Comments prefixed with `Student:' are relevant to students.
+% Skip anything else you don't understand, or ask me.
+%
+% set font encoding for PDFLaTeX or XeLaTeX
+\usepackage{ifxetex}
+\ifxetex
+  \usepackage{fontspec}
+\else
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{lmodern}
+\fi
+
+% Student: These lines describe some document metadata.
+\title{Problem Set 9}
+\author{%
+% Student: change the next line to your name!
+    Name
+\\  MATH-UA 120 Discrete Mathematics
+}
+\date{due December 15, 2023}
+
+
+\usepackage[headings=runin-fixed-nr]{exsheets}
+% These make enumerates within questions start at the second ("(a)") level, rather than the first ("1.") level.
+\makeatletter
+    \newcommand{\stepenumdepth}{\advance\@enumdepth\@ne}
+\makeatother
+\SetupExSheets{
+    question/pre-body-hook=\stepenumdepth,
+    solution/pre-body-hook=\stepenumdepth,
+}
+\DeclareInstance{exsheets-heading}{runin-nn-np}{default}{
+    runin = true,
+    title-post-code = .\space,
+    join = {
+        main[r,vc]title[l,vc](0pt,0pt);
+    }
+}
+\newif\ifshowsolutions
+% Student: replace `false' with `true' to typeset your solutions.
+% Otherwise they are ignored!
+\showsolutionstrue
+\ifshowsolutions
+    \SetupExSheets{
+        question/pre-hook=\itshape,
+        solution/headings=runin-nn-np,
+        solution/print=true,
+        solution/name=Answer
+    }%
+    \makeatletter%
+    \pretocmd{\@title}{Answers to }%
+    \makeatother%
+\else
+    \SetupExSheets{solution/print=false}
+\fi
+
+% Bug workaround: http://tex.stackexchange.com/a/146536/1402
+%\newenvironment{exercise}{}{}
+\RenewQuSolPair{question}{solution}
+%\let\answer\solution
+%\let\endanswer\endsolution
+\usepackage{manfnt}
+\newcommand{\danger}{\marginpar[\hfill\dbend]{\dbend\hfill}}
+
+% We are creating a command for some common commands.
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\modulo}{\text{mod }}
+\newcommand{\divisor}{\text{ div }}
+
+% This package is for specifying graphics.  It's amazing.
+% Manual at http://texdoc.net/texmf-dist/doc/generic/pgf/pgfmanual.pdf
+\usepackage{tikz}
+\tikzstyle{vertex}=[circle,draw,fill=none,inner sep=0pt,outer sep=0pt, minimum width=1ex]
+\tikzstyle{edge}=[draw,thick]
+\usepackage{multirow, multicol}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{amsfonts}
+\usepackage{siunitx}
+\DeclareSIUnit\pound{lb}
+\usepackage{hyperref}
+\newtheorem*{theorem}{Theorem}
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+\newenvironment{note}{\noindent\emph{Note}.}{}
+% This is the beginning of the part of the file that describes
+% the text of the document.
+% That's why it says `\begin{document}' below. :-)
+\begin{document}
+\maketitle
+
+
+
+These are to be written up and turned in to Gradescope.\\
+
+
+
+\ifshowsolutions
+    \SetupExSheets{solution/print=true}
+\else
+    \danger
+ \underline{ \LaTeX  Instructions:}  You can view the source (\texttt{.tex}) file to get some more examples of \LaTeX{} code.  I have commented the source file in places where new \LaTeX{} constructions are used.
+  
+  Remember to change \verb|\showsolutionsfalse| to \verb|\showsolutionstrue|
+    in the document's preamble 
+    (between \verb|\documentclass{article}| and \verb|\begin{document}|)
+\fi
+
+\section*{Assigned Problems}
+
+\begin{question}
+    Suppose $G$ is a subgraph of $H$.  Prove or disprove:
+\begin{enumerate}
+	\item $\alpha(G) \leq \alpha(H)$
+	\item $\omega(G) \leq \omega(H)$
+	\end{enumerate}
+\end{question}
+% Student: put your answer between the next two lines.
+\begin{solution}
+\begin{enumerate}
+	\item False: The independence number (the size of the largest independent set) of a subgraph can be larger than the independence number of a graph.
+
+Consider $H = K_3$, the complete graph on 3 vertices.  Since any two vertices are adjacent, the size of the largest independent set is 1.  So, $\alpha(H)= 1$.
+
+Let $G$ be the subgraph of $H$ that contains no edge: $V(G) = \{1, 2, 3\}$ and $E(G) = \{ \}$.  Then, $\alpha(G) = 3 > \alpha(H)$.
+
+	\item True: The clique number (the size of the largest clique) of a subgraph is less than or equal to the clique number of a graph.
+
+\begin{proof}
+In a nutshell, vertices that are adjacent in a subgraph are also adjacent in the main graph.
+
+Suppose that $G$ is a subgraph of $H$.  This means that $V(G) \subseteq V(H)$ and $E(G) \subseteq E(H)$.
+
+Suppose that $\omega(G) = k$, for some $k \in \Z$, positive.  This means that there are $k$ vertices $v_1, \ldots, v_k \in V(G) \subseteq V(H)$ such that any two of them are adjacent in $G$; that is, $\{v_i, v_j \} \in E(G) \subseteq E(H)$.
+
+This means that $v_1, \ldots, v_k$ also form a clique in $H$.  So, $H$ has a clique of size $k$.  This means that $\omega(H) \geq k = \omega(G)$.
+
+Therefore, we have shown that $\omega(G) \leq \omega(H)$.
+\end{proof}
+\end{enumerate}
+\end{solution}
+
+
+\begin{question}
+    Let $G=(V, E)$ be a graph with $V=\{v_1, v_2, \dots, v_n\}$. Its \textbf{degree sequence} is the list of degrees of its vertices, arranged in non-increasing order. That is, the degree sequence of $G$ is $(d(v_1), d(v_2), \dots, d(v_n))$ with the vertices arranged such that $d(v_1)\geq  d(v_2) \geq \dots \geq d(v_n)$. Below are different lists of possible degree sequences. Determine whether each case can be a graph with $n$ vertices. If not, explain why not. If so, describe a graph with these degrees: is the graph a complete graph, a cycle, a path, contains specific subgraphs, connected, etc?
+\begin{enumerate}
+	\item $n=7$ and $(6, 5, 4, 3, 2, 1, 0)$
+	\item $n=6$ and $(2, 2, 2, 2, 2, 2)$
+	\item $n=6$ and $(3, 2, 2, 2, 2, 2)$
+	\item $n=6$ and $(1, 1, 1, 1, 1, 1)$
+	\item $n=6$ and $(5, 3, 3, 3, 3, 3)$
+	\end{enumerate}
+\end{question}
+% Student: put your answer between the next two lines.
+\begin{solution}
+\begin{enumerate}
+	\item This is not a graph because one vertex has degree 6, which means this vertex is adjacent to the remaining 6 vertices, but there is a vertex with degree 0, which is impossible.
+	\item This can be a cycle graph with 6 vertices.
+	\item This is not a graph since the sum of the degrees is odd.
+	\item This can be a disconnected graph consisting 3 components, where each component is a $P_2$ path graph.
+	\item This can be a graph with a cycle subgraph $C_5$ with 5 vertices of degree 3 and the remaining vertex, $v$, adjacent to all 5 vertices of degree 3. If we place vertex $v$ in the center, it looks like a "wheel".
+\end{enumerate}
+\end{solution}
+
+
+\begin{question}
+    
+\begin{enumerate}
+	\item Given a graph with $n$ vertices. First, what is the maximum number of edges can the graph have and be disconnected? Then, what is the minimum number of edges we need to add to the previous graph to be connected?
+	\item A \textbf{complete bipartite graph} $K_{m,n}$ is a graph whose vertices can be partitioned $V=X\cup Y$ such that $|X|=m$ and  $|Y|=n$ for positive integers $m,n$, and $\{x, y\}$ is an edge in $K_{m,n}$ if and only if $x\in X$ and $y\in Y$. What is the number of edges in $K_{m,n}$?
+	\item Let integer $n\geq 3$. Given a cycle graph $C_n$, how many possible subgraphs of $C_n$ can there be?
+	\end{enumerate}
+\end{question}
+% Student: put your answer between the next two lines.
+\begin{solution}
+\begin{enumerate}
+	\item The maximum number of edges to any graph with $n$ vertices to stay disconnected is $\binom{n-1}{2}$. We create a complete subgraph with $n-1$ vertices and the remaining vertex will have degree 0, which will result in a disconnected graph. Given this graph, we only need to add one more edge to make it connected.
+	\item Since the sum of all degrees of vertices is equal to twice the number of edges, in $K_{m, n}$ there are $m$ vertices of degree $n$ and $n$ vertices of degree $m$, then the sum of all the degrees is $2mn$. Then there are $mn$ edges in $K_{m, n}$.
+	\item Note $C_n = (V, E)$ with $|V|=n$ and $|E|=n$. Since the set of vertices for any graph is nonempty, there are $\displaystyle \sum_{i=1}^n \binom{n}{i}$ possible sets of vertices for any subgraph of $C_n$. Let's partition the possible set of vertices for any subgraph of $C_n$ with $\cup_{i=1}^n V_i$ where $|V_i|=\binom{n}{i}$. In $V_1$, each element is a subset of size 1, so the only possible set of edges is the empty set; then there are $\binom{n}{1}$ possible subgraphs with one vertex. In $V_2$, each element is a subset of size 2, so the only possible set of edges is the empty set or the set with one subset of 2 vertices; then there are $2\cdot \binom{n}{2}$ possible subgraphs with two vertices. In $V_i$ where $3\leq i\leq n$, each element is a subset of size $i$, so there are $2^i$ possible set pf edges; then there are $2^i \cdot \binom{n}{i}$ possible subgraphs. 
+There are $\displaystyle \binom{n}{1} + 2\cdot\binom{n}{2} + \sum_{i=3}^n 2^i\cdot\binom{n}{i}$ possible subgraphs of $C_n$.
+	
+
+\end{enumerate}
+\end{solution}
+
+
+\begin{question}
+\begin{enumerate}
+	\item Prove that if a tree has $n$ vertices where $n\geq 4$ and is not a path graph $P_n$, then it has at least three vertices of degree 1.
+	\item A \textbf{complete bipartite graph} $K_{m,n}$ is a graph whose vertices can be partitioned $V=X\cup Y$ such that $|X|=m$ and  $|Y|=n$ for positive integers $m,n$, and $\{x, y\}$ is an edge in $K_{m,n}$ if and only if $x\in X$ and $y\in Y$. Prove that every cycle in $K_{m, n}$ has an even number of edges.
+	\end{enumerate}
+\end{question}
+% Student: put your answer between the next two lines.
+\begin{solution}
+\begin{enumerate}
+	\item Let $(V, E)$ be a tree that is a not a path graph with $|V|\geq 4$. For the sake of contradiction, assume that two or less vertices has degree 1. Then the remaining vertices has degree 2 or more. In particular, since is it not a path graph, there is at least one vertex of degree 3 or more. Observe
+	\begin{align*}
+	2|E| = \sum_{v\in V} deg(v) \geq 2(|V|-3) + 2 + 3  = 2|V| -1&\implies |E| \geq |V| - \frac{1}{2}.
+	\end{align*}
+	This contradicts $(V, E)$ being a tree, since $|E|=|V|-1$.
+	\item Let $m, n$ be positive integers. Let $v_0, v_1, \dots, v_k$ be vertices in $K_{m, n}$ such that $v_0\sim v_1\sim \cdots\sim v_k\sim v_0$ is a cycle in $K_{m,n}$. Let $V=X\cup Y$ be the set of vertices in $K_{m, n}$ and $X$ and $Y$ are pairwise disjoint. Without loss of generality, let $v_0\in X$. Then $v_1, v_3, \dots, v_k\in Y$ and $v_0, v_2, \dots, v_{k-1}\in X$. Since the cycle $v_0\sim v_1\sim \cdots\sim v_k\sim v_0$ has $k+1$ edges and $k$ is odd, then $k+1$ is even and there are even number of edges.
+\end{enumerate}
+\end{solution}
+
+
+\begin{question}
+    Prove by induction on $n$: Given integer $n\geq 1$. If  $T$ is a tree with $n$ vertices, then $T$ has $n-1$ edges. 
+\end{question}
+% Student: put your answer between the next two lines.
+\begin{solution}
+\begin{description}
+	\item[Bases:] Consider $n=1$. A tree with 1 vertex has no edges. Hence the statement holds for $n=1$.
+	\item[Inductive Hypothesis:] Consider an arbitrary integer $k\geq1$. For $1\leq n \leq k$, assume that a tree with $n$ vertices has $n-1$ edges.
+	\item[Inductive Step:] Consider $n=k+1$. Let $T$ be a tree with $k+1$ vertices. Let $e$ be any edge in $T$. Since every edge of a tree is a cut edge, $T-e$ has exactly two components, denoted $T_1$ and $T_2$. Since $T_1$ and $T_2$ are connected and acyclic, then $T_1$ and $T_2$ are trees. Let $n_1$ and $n_2$ be the number of vertices in $T_1$ and $T_2$, respectively, such that $0<n_1, n_2<k+1$ and $n_1+n_2=k+1$. By the inductive hypothesis, $T_1$ has $n_1-1$ edges and $T_2$ has $n_2-1$ edges. Therefore $T$ has $(n_1-1) + (n_2-1) + 1 = n_1+n_2-1= (k+1) - 1$ edges. Hence the statement holds for $n=k+1$.
+	
+	Therefore, by the principle of mathematical induction, the statement is true.
+\end{description}
+\end{solution}
+
+\end{document}
+
